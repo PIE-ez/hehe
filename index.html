@@ -125,7 +125,7 @@
 <!-- Text on Top -->
 <div class="center-text">
   <h1>Happy Valentine’s Day! 💖</h1>
-  <p>Here’s a whole beautiful garden of love and flower just for you 💐❤️</p>
+  <p>Here’s a whole beautiful garden of love just for you 💐✨</p>
 </div>
 
 <script>
@@ -133,28 +133,58 @@
   const heartColors = ['#ff91a4','#f4c2c2','#ffc1e3','#f9a1d4','#ffd1dc'];
 
   function createHeart() {
-    const heart = document.createElement('div');
-    heart.className = 'heart';
-    const startX = Math.random() * window.innerWidth;
-    const startY = Math.random() * window.innerHeight;
-    heart.style.left = startX + 'px';
-    heart.style.top = startY + 'px';
-    const size = 10 + Math.random() * 20;
-    heart.style.width = size + 'px';
-    heart.style.height = size + 'px';
-    heart.style.background = heartColors[Math.floor(Math.random() * heartColors.length)];
-    document.body.appendChild(heart);
+  const heart = document.createElement('div');
+  heart.className = 'heart';
+  const startX = Math.random() * window.innerWidth;
+  const startY = Math.random() * window.innerHeight;
+  heart.style.left = startX + 'px';
+  heart.style.top = startY + 'px';
+  const size = 10 + Math.random() * 20;
+  heart.style.width = size + 'px';
+  heart.style.height = size + 'px';
+  heart.style.background = heartColors[Math.floor(Math.random() * heartColors.length)];
+  document.body.appendChild(heart);
 
-    const endY = startY - (150 + Math.random() * 200); 
-    const duration = 4000 + Math.random() * 3000;
+  const endY = startY - (150 + Math.random() * 200); 
+  const duration = 4000 + Math.random() * 3000;
 
-    heart.animate([
-      { top: startY + 'px', opacity: 0.8, transform: 'rotate(0deg) scale(0.5)' },
-      { top: endY + 'px', opacity: 0, transform: `rotate(${Math.random()*30-15}deg) scale(1.2)` }
-    ], { duration: duration, easing: 'ease-out', fill: 'forwards' });
+  // Animate the floating heart
+  const animation = heart.animate([
+    { top: startY + 'px', opacity: 0.8, transform: 'rotate(0deg) scale(0.5)' },
+    { top: endY + 'px', opacity: 0, transform: `rotate(${Math.random()*30-15}deg) scale(1.2)` }
+  ], { duration: duration, easing: 'ease-out', fill: 'forwards' });
 
-    setTimeout(() => heart.remove(), duration);
-  }
+  // Remove heart after animation
+  setTimeout(() => heart.remove(), duration);
+
+  // --- Add click/tap event ---
+  heart.addEventListener('click', () => {
+    // Replace heart with word
+    const word = document.createElement('div');
+    word.textContent = 'Hmue';
+    word.style.position = 'absolute';
+    word.style.left = heart.style.left;
+    word.style.top = heart.style.top;
+    word.style.fontSize = Math.max(size, 12) + 'px';
+    word.style.color = '#ff91a4';
+    word.style.fontWeight = 'bold';
+    word.style.pointerEvents = 'none';
+    word.style.zIndex = 10;
+    word.style.opacity = 1;
+    document.body.appendChild(word);
+
+    // Animate word fading and floating
+    word.animate([
+      { transform: 'translateY(0)', opacity: 1 },
+      { transform: 'translateY(-100px)', opacity: 0 }
+    ], { duration: 1500, easing: 'ease-out', fill: 'forwards' });
+
+    // Remove both heart and word
+    heart.remove();
+    setTimeout(() => word.remove(), 1500);
+  });
+}
+
 
   setInterval(() => { 
     for(let i = 0; i < 8; i++) createHeart(); 
@@ -207,5 +237,3 @@
 </script>
 </body>
 </html>
-
-

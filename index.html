@@ -5,48 +5,31 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Happy Valentine!</title>
 <style>
+  /* --- Modern Elegant Background --- */
   body {
     margin: 0;
     padding: 0;
     font-family: 'Segoe UI', sans-serif;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
     height: 100vh;
-    background: linear-gradient(to top, #ffecd2, #fcb69f);
+    background: linear-gradient(160deg, #f7e8f0, #e3d6f0, #fbeff8);
     overflow: hidden;
     position: relative;
   }
 
-  h1 {
-    font-size: 3em;
-    color: #fff;
+  /* --- Text --- */
+  h1, p {
+    position: absolute;
+    width: 100%;
     text-align: center;
-    z-index: 2;
-    position: relative;
-    animation: fadeIn 3s ease-in-out forwards;
+    color: #4a1a55;
     margin: 0;
-    text-shadow: 0 0 10px #ff6699, 0 0 20px #ff3366;
+    z-index: 10; /* Always on top */
+    text-shadow: 0 0 12px rgba(255, 200, 220, 0.7);
   }
+  h1 { top: 15%; font-size: 3em; }
+  p { top: 28%; font-size: 1.5em; }
 
-  p {
-    font-size: 1.5em;
-    color: #fff;
-    text-align: center;
-    z-index: 2;
-    position: relative;
-    animation: fadeIn 4s ease-in-out forwards;
-    margin: 10px 20px 0 20px;
-    text-shadow: 0 0 8px #ff99cc;
-  }
-
-  @keyframes fadeIn {
-    0% {opacity: 0; transform: scale(0.8);}
-    100% {opacity: 1; transform: scale(1);}
-  }
-
-  /* Big heart behind text */
+  /* --- Big Heart Behind Text --- */
   .big-heart {
     position: absolute;
     width: 300px;
@@ -55,171 +38,155 @@
     left: 50%;
     transform: translate(-50%, -50%) scale(0);
     z-index: 1;
-    animation: appear 1.5s forwards, pulse 2s infinite alternate;
+    animation: appear 2s forwards, pulse 2s infinite alternate;
   }
+  @keyframes appear { 0% { transform: translate(-50%, -50%) scale(0); } 100% { transform: translate(-50%, -50%) scale(1); } }
+  @keyframes pulse { 0% { transform: translate(-50%, -50%) scale(0.95); } 100% { transform: translate(-50%, -50%) scale(1.05); } }
 
-  @keyframes appear {
-    0% { transform: translate(-50%, -50%) scale(0); }
-    100% { transform: translate(-50%, -50%) scale(1); }
-  }
-
-  @keyframes pulse {
-    0% { transform: translate(-50%, -50%) scale(0.95); }
-    100% { transform: translate(-50%, -50%) scale(1.05); }
-  }
-
-  /* Floating hearts */
+  /* --- Mini Floating Hearts --- */
   .heart {
     position: absolute;
-    width: 20px;
-    height: 20px;
-    background: red;
+    border-radius: 2px;
     transform: rotate(-45deg);
-    animation: floatUp linear forwards;
-    pointer-events: none;
-    z-index: 2;
+    opacity: 0.8;
+    z-index: 5; /* floating hearts above flowers, behind text */
   }
-
-  .heart::before,
-  .heart::after {
+  .heart::before, .heart::after {
     content: '';
     position: absolute;
-    width: 20px;
-    height: 20px;
+    width: 100%;
+    height: 100%;
     background: inherit;
     border-radius: 50%;
   }
-  .heart::before { top: -10px; left: 0; }
-  .heart::after { left: 10px; top: 0; }
+  .heart::before { top: -50%; left: 0; }
+  .heart::after { left: 50%; top: 0; }
 
-  @keyframes floatUp {
-    0% {
-      transform: translateY(0) scale(0.5) rotate(0deg);
-      opacity: 1;
-    }
-    25% {
-      transform: translateY(-50px) scale(0.7) rotate(10deg);
-      opacity: 0.9;
-    }
-    50% {
-      transform: translateY(-150px) scale(0.9) rotate(-10deg);
-      opacity: 0.7;
-    }
-    75% {
-      transform: translateY(-250px) scale(1.1) rotate(5deg);
-      opacity: 0.5;
-    }
-    100% {
-      transform: translateY(-400px) scale(1.3) rotate(0deg);
-      opacity: 0;
-    }
-  }
-
-  /* Flower container */
-  .flower {
-    position: absolute;
-    bottom: 0;
-    width: 80px;
-    height: 100px;
-    animation: grow 3s forwards;
-  }
-  @keyframes grow {
-    0% {transform: scaleY(0);}
-    100% {transform: scaleY(1);}
-  }
-
-  /* Grass blades */
+  /* --- Grass --- */
   .grass-blade {
     position: absolute;
     bottom: 0;
     width: 2px;
-    background: #228B22;
+    background: #5a9d63;
     border-radius: 1px;
     animation: sway 3s ease-in-out infinite alternate;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 2; /* behind flowers */
   }
-  @keyframes sway {
-    0% {transform: rotate(-10deg);}
-    100% {transform: rotate(10deg);}
-  }
+  @keyframes sway { 0% {transform: rotate(-8deg);} 100% {transform: rotate(8deg);} }
 
+  /* --- Flower --- */
+  .flower {
+    width: 40px;
+    height: auto;
+    animation: grow 2s forwards;
+    transform-origin: bottom center;
+    z-index: 3; /* above grass */
+  }
+  @keyframes grow { 0% { transform: scaleY(0); } 100% { transform: scaleY(1); } }
 </style>
 </head>
 <body>
 
-<!-- Big heart using a proper full heart SVG -->
+<!-- Big Heart -->
 <div class="big-heart">
   <svg viewBox="0 0 512 512" width="300" height="300">
-    <path fill="rgba(255,0,100,0.4)" d="M256 464l-16-16C113 317 48 254 48 176 48 115 100 64 160 64c38 0 73 20 96 51 23-31 58-51 96-51 60 0 112 51 112 112 0 78-65 141-192 272l-16 16z"/>
+    <path fill="rgba(255,150,200,0.4)" d="M256 464l-16-16C113 317 48 254 48 176 48 115 100 64 160 64c38 0 73 20 96 51 23-31 58-51 96-51 60 0 112 51 112 112 0 78-65 141-192 272l-16 16z"/>
   </svg>
 </div>
 
 <h1>Happy Valentine’s Day! 💖</h1>
-<p>You light up my world and make every day brighter. Here’s a little garden of flowers, just for you 💐❤️</p>
+<p>Here’s a whole beautiful garden of love and flowers just for you 💐✨</p>
 
 <script>
-  // Floating hearts
-  const heartColors = ['#FF0000','#FF69B4','#FF1493','#FF4500','#FFB6C1','#FFD700'];
+  /* --- Floating Mini Hearts --- */
+  const heartColors = ['#ff91a4','#f4c2c2','#ffc1e3','#f9a1d4','#ffd1dc'];
 
   function createHeart() {
     const heart = document.createElement('div');
     heart.className = 'heart';
-    heart.style.left = Math.random() * window.innerWidth + 'px';
-    heart.style.background = heartColors[Math.floor(Math.random() * heartColors.length)];
-    const size = 15 + Math.random() * 15;
+
+    const startX = Math.random() * window.innerWidth;
+    const startY = Math.random() * window.innerHeight;
+
+    heart.style.left = startX + 'px';
+    heart.style.top = startY + 'px';
+
+    const size = 10 + Math.random() * 20;
     heart.style.width = size + 'px';
     heart.style.height = size + 'px';
-    heart.style.animationDuration = 4 + Math.random() * 3 + 's';
+    heart.style.background = heartColors[Math.floor(Math.random() * heartColors.length)];
+
     document.body.appendChild(heart);
-    setTimeout(() => heart.remove(), 7000);
+
+    const endY = startY - (150 + Math.random() * 200); // float upward
+    const duration = 4000 + Math.random() * 3000;
+
+    heart.animate([
+      { top: startY + 'px', opacity: 0.8, transform: 'rotate(0deg) scale(0.5)' },
+      { top: endY + 'px', opacity: 0, transform: `rotate(${Math.random()*30-15}deg) scale(1.2)` }
+    ], { duration: duration, easing: 'ease-out', fill: 'forwards' });
+
+    setTimeout(() => heart.remove(), duration);
   }
 
-  setInterval(() => {
-    for(let i = 0; i < 2; i++) createHeart();
-  }, 500);
+  setInterval(() => { 
+    for(let i = 0; i < 8; i++) createHeart(); 
+  }, 300);
 
-  // Flowers
+  /* --- Grass Blades --- */
+  const grassBlades = [];
+  for(let i = 0; i < 120; i++) {
+    const blade = document.createElement('div');
+    blade.className = 'grass-blade';
+    const height = 30 + Math.random() * 80;
+    blade.style.height = height + 'px';
+    blade.dataset.height = height;
+    blade.style.left = Math.random() * window.innerWidth + 'px';
+    document.body.appendChild(blade);
+    grassBlades.push(blade);
+  }
+
+  /* --- Flower Colors --- */
   function getRandomColor() {
-    const colors = ['#FF0000','#FF69B4','#FFDD00','#FF8C00','#ADFF2F','#00CED1','#DA70D6','#FF1493'];
+    const colors = ['#ff7eb9','#ffb3d1','#ffe4f0','#e0aaff','#fddde6','#ff9ed1'];
     return colors[Math.floor(Math.random() * colors.length)];
   }
 
+  /* --- Flowers Growing --- */
   function createFlower() {
-    const container = document.createElement('div');
-    container.className = 'flower';
-    container.style.left = Math.random() * (window.innerWidth - 80) + 'px';
+    if(grassBlades.length === 0) return;
+    const blade = grassBlades[Math.floor(Math.random() * grassBlades.length)];
+    const stemHeight = blade.dataset.height;
+
+    const flower = document.createElement('div');
+    flower.className = 'flower';
 
     const petal1 = getRandomColor();
     const petal2 = getRandomColor();
     const petal3 = getRandomColor();
-    const leafColor = "#228B22";
 
-    const flowerSVG = `<svg viewBox="0 0 200 200" width="80" height="100">
-      <circle cx="40" cy="60" r="25" fill="${petal1}"/>
-      <circle cx="60" cy="60" r="25" fill="${petal2}"/>
-      <circle cx="50" cy="40" r="25" fill="${petal3}"/>
-      <rect x="48" y="60" width="4" height="60" fill="green"/>
-      <ellipse cx="35" cy="80" rx="10" ry="5" fill="${leafColor}" transform="rotate(-30 35 80)"/>
-      <ellipse cx="65" cy="80" rx="10" ry="5" fill="${leafColor}" transform="rotate(30 65 80)"/>
-    </svg>`;
-
-    container.innerHTML = flowerSVG;
-    document.body.appendChild(container);
+    flower.innerHTML = `
+      <svg viewBox="0 0 100 ${parseInt(stemHeight)}" width="40" height="${parseInt(stemHeight)}">
+        <rect x="48" y="0" width="4" height="${stemHeight}" fill="#5a9d63"/>
+        <circle cx="50" cy="0" r="12" fill="${petal1}" />
+        <circle cx="63" cy="0" r="12" fill="${petal2}" />
+        <circle cx="56" cy="-14" r="12" fill="${petal3}" />
+      </svg>
+    `;
+    blade.appendChild(flower);
   }
 
-  for (let i = 0; i < 20; i++) {
-    setTimeout(createFlower, i * 200);
-  }
-  setInterval(() => { for (let i=0;i<3;i++) createFlower(); }, 1000);
+  // Create initial flowers
+  for(let i = 0; i < 200; i++) setTimeout(createFlower, i * 80);
 
-  // Grass
-  function createGrass() {
-    const blade = document.createElement('div');
-    blade.className = 'grass-blade';
-    blade.style.left = Math.random() * window.innerWidth + 'px';
-    blade.style.height = (20 + Math.random() * 30) + 'px';
-    document.body.appendChild(blade);
-  }
-  for (let i=0;i<150;i++) createGrass();
+  // Add flowers continuously
+  setInterval(() => { 
+    for(let i = 0; i < 6; i++) createFlower(); 
+  }, 400);
+
 </script>
 </body>
 </html>

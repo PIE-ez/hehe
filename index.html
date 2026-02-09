@@ -4,236 +4,173 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Happy Valentine!</title>
-
-<!-- Google Font -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-
 <style>
-  body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Poppins', sans-serif;
-    height: 100vh;
-    background: linear-gradient(160deg, #f7e8f0, #e3d6f0, #fbeff8);
-    overflow: hidden;
-    position: relative;
-  }
+body {
+  margin: 0; padding: 0;
+  font-family: 'Poppins', sans-serif;
+  height: 100vh; overflow: hidden; position: relative;
+  transition: background 1.5s ease;
+}
+body.day { background: linear-gradient(160deg, #f7e8f0, #e3d6f0, #fbeff8); }
+body.night { background: linear-gradient(160deg, #1b1b3a, #2a2a5c, #3e3e7c); }
 
-  /* --- Heart as Background --- */
-  .heart-background {
-    position: absolute;
-    top: 40%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 400px;  /* bigger heart */
-    height: 400px;
-    z-index: 1;
-    animation: appear 2s forwards, pulse 2s infinite alternate;
-    opacity: 0.4; /* subtle background */
-  }
+/* Heart background */
+.heart-background {
+  position: absolute; top: 40%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px; height: 400px;
+  z-index: 1; opacity: 0.4; cursor: pointer;
+  animation: appear 2s forwards, pulse 2s infinite alternate;
+}
+.heart-background svg { width: 100%; height: 100%; }
+@keyframes appear { 0% { transform: translate(-50%, -50%) scale(0); } 100% { transform: translate(-50%, -50%) scale(1); } }
+@keyframes pulse { 0% { transform: translate(-50%, -50%) scale(0.95); } 100% { transform: translate(-50%, -50%) scale(1.05); } }
 
-  .heart-background svg {
-    width: 100%;
-    height: 100%;
-  }
+/* Center text */
+.center-text {
+  position: absolute; top: 40%; left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center; z-index: 10;
+  text-shadow: 0 0 12px rgba(255, 200, 220, 0.7);
+  width: 90%;
+}
+.center-text h1 { font-size: 2.5em; margin:0; color:#4a1a55; transition: color 1s ease; }
+.center-text p { font-size:1.2em; margin-top:10px; color:#4a1a55; transition: color 1s ease; }
+body.night .center-text h1,
+body.night .center-text p { color:#ffd1e0; }
+@media (max-width: 600px){ .center-text h1{font-size:1.8em;} .center-text p{font-size:1em;} }
 
-  @keyframes appear { 0% { transform: translate(-50%, -50%) scale(0); } 100% { transform: translate(-50%, -50%) scale(1); } }
-  @keyframes pulse { 0% { transform: translate(-50%, -50%) scale(0.95); } 100% { transform: translate(-50%, -50%) scale(1.05); } }
+/* Floating hearts */
+.heart { position:absolute; border-radius:2px; transform:rotate(-45deg); z-index:5; pointer-events:auto; }
+.heart::before, .heart::after{ content:''; position:absolute; width:100%; height:100%; background:inherit; border-radius:50%; }
+.heart::before{ top:-50%; left:0; } .heart::after{ left:50%; top:0; }
 
-  /* --- Text over Heart --- */
-  .center-text {
-    position: absolute;
-    top: 40%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    z-index: 10;
-    color: #4a1a55;
-    text-shadow: 0 0 12px rgba(255, 200, 220, 0.7);
-    width: 90%;
-  }
+/* Grass */
+.grass-blade {
+  position:absolute; bottom:0; width:2px; background:#5a9d63;
+  border-radius:1px; animation:sway 3s ease-in-out infinite alternate;
+  display:flex; flex-direction:column; align-items:center; z-index:2;
+}
+@keyframes sway { 0% {transform:rotate(-8deg);} 100% {transform:rotate(8deg);} }
 
-  .center-text h1 {
-    font-size: 2.5em;
-    margin: 0;
-  }
+/* Flower */
+.flower { width:40px; height:auto; animation:grow 2s forwards; transform-origin:bottom center; z-index:3; }
+@keyframes grow { 0%{transform:scaleY(0);} 100%{transform:scaleY(1);} }
 
-  .center-text p {
-    font-size: 1.2em;
-    margin-top: 10px;
-  }
-
-  @media (max-width: 600px) {
-    .center-text h1 { font-size: 1.8em; }
-    .center-text p { font-size: 1em; }
-  }
-
-  /* --- Floating Mini Hearts --- */
-  .heart {
-    position: absolute;
-    border-radius: 2px;
-    transform: rotate(-45deg);
-    opacity: 0.8;
-    z-index: 5;
-  }
-  .heart::before, .heart::after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: inherit;
-    border-radius: 50%;
-  }
-  .heart::before { top: -50%; left: 0; }
-  .heart::after { left: 50%; top: 0; }
-
-  /* --- Grass --- */
-  .grass-blade {
-    position: absolute;
-    bottom: 0;
-    width: 2px;
-    background: #5a9d63;
-    border-radius: 1px;
-    animation: sway 3s ease-in-out infinite alternate;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    z-index: 2;
-  }
-  @keyframes sway { 0% {transform: rotate(-8deg);} 100% {transform: rotate(8deg);} }
-
-  /* --- Flower --- */
-  .flower {
-    width: 40px;
-    height: auto;
-    animation: grow 2s forwards;
-    transform-origin: bottom center;
-    z-index: 3;
-  }
-  @keyframes grow { 0% { transform: scaleY(0); } 100% { transform: scaleY(1); } }
+/* Sparkles */
+.sparkle {
+  position:absolute; width:2px; height:2px; border-radius:50%;
+  background:#fff8f0; opacity:0.9; z-index:15;
+  filter: drop-shadow(0 0 4px #ffd1e0);
+}
+body.night .sparkle { background:#ffe6ff; filter: drop-shadow(0 0 5px #ffb6f2); }
 </style>
 </head>
-<body>
+<body class="day">
 
-<!-- Big Heart Background -->
 <div class="heart-background">
   <svg viewBox="0 0 512 512">
     <path fill="rgba(255,150,200,0.4)" d="M256 464l-16-16C113 317 48 254 48 176 48 115 100 64 160 64c38 0 73 20 96 51 23-31 58-51 96-51 60 0 112 51 112 112 0 78-65 141-192 272l-16 16z"/>
   </svg>
 </div>
 
-<!-- Text on Top -->
 <div class="center-text">
   <h1>Happy Valentine’s Day! 💖</h1>
-  <p>Here’s a whole beautiful garden of love just for you 💐✨</p>
+  <p>Here’s a beautiful garden of love and flowers just for you 💐💗</p>
 </div>
 
 <script>
-  /* --- Floating Mini Hearts --- */
-  const heartColors = ['#ff91a4','#f4c2c2','#ffc1e3','#f9a1d4','#ffd1dc'];
+// Toggle Day/Night
+let sparkles=[]; // store sparkle elements
+document.querySelector('.heart-background').addEventListener('click', () => {
+  document.body.classList.toggle('night');
+  document.body.classList.toggle('day');
 
-  function createHeart() {
-  const heart = document.createElement('div');
-  heart.className = 'heart';
-  const startX = Math.random() * window.innerWidth;
-  const startY = Math.random() * window.innerHeight;
-  heart.style.left = startX + 'px';
-  heart.style.top = startY + 'px';
-  const size = 10 + Math.random() * 20;
-  heart.style.width = size + 'px';
-  heart.style.height = size + 'px';
-  heart.style.background = heartColors[Math.floor(Math.random() * heartColors.length)];
+  if(document.body.classList.contains('night')){
+    // create sparkles only in night mode
+    for(let i=0;i<100;i++){
+      const s=document.createElement('div'); s.className='sparkle';
+      s.style.left=Math.random()*window.innerWidth+'px';
+      s.style.top=Math.random()*window.innerHeight+'px';
+      document.body.appendChild(s);
+      sparkles.push({el:s, x:parseFloat(s.style.left), y:parseFloat(s.style.top), dx:(Math.random()*0.3-0.15), dy:(Math.random()*0.3-0.15)});
+    }
+    animateSparkles();
+  } else {
+    // remove sparkles when switching back to day
+    sparkles.forEach(s=>{ if(s.el.parentNode) s.el.parentNode.removeChild(s.el); });
+    sparkles=[];
+  }
+});
+
+// Floating hearts with "Hmue"
+const heartColors = ['#ff91a4','#f4c2c2','#ffc1e3','#f9a1d4','#ffd1dc'];
+function createHeart(){
+  const heart=document.createElement('div'); heart.className='heart';
+  const startX=Math.random()*window.innerWidth; const startY=Math.random()*window.innerHeight;
+  heart.style.left=startX+'px'; heart.style.top=startY+'px';
+  const size=15+Math.random()*20; heart.style.width=size+'px'; heart.style.height=size+'px';
+  heart.style.background=heartColors[Math.floor(Math.random()*heartColors.length)];
   document.body.appendChild(heart);
-
-  const endY = startY - (150 + Math.random() * 200); 
-  const duration = 4000 + Math.random() * 3000;
-
-  // Animate the floating heart
-  const animation = heart.animate([
-    { top: startY + 'px', opacity: 0.8, transform: 'rotate(0deg) scale(0.5)' },
-    { top: endY + 'px', opacity: 0, transform: `rotate(${Math.random()*30-15}deg) scale(1.2)` }
-  ], { duration: duration, easing: 'ease-out', fill: 'forwards' });
-
-  // Remove heart after animation
-  setTimeout(() => heart.remove(), duration);
-
-  // --- Add click/tap event ---
-  heart.addEventListener('click', () => {
-    // Replace heart with word
-    const word = document.createElement('div');
-    word.textContent = 'Hmue';
-    word.style.position = 'absolute';
-    word.style.left = heart.style.left;
-    word.style.top = heart.style.top;
-    word.style.fontSize = Math.max(size, 12) + 'px';
-    word.style.color = '#ff91a4';
-    word.style.fontWeight = 'bold';
-    word.style.pointerEvents = 'none';
-    word.style.zIndex = 10;
-    word.style.opacity = 1;
+  const endY=startY-(150+Math.random()*200);
+  heart.animate([{top:startY+'px', opacity:0.8, transform:'rotate(0deg) scale(0.5)'},
+                 {top:endY+'px', opacity:0, transform:`rotate(${Math.random()*30-15}deg) scale(1.2)`}],
+                 {duration:4000+Math.random()*3000, easing:'ease-out', fill:'forwards'}).onfinish=()=>{if(heart.parentNode) heart.remove();}
+  heart.addEventListener('click',()=>{
+    const word=document.createElement('div'); word.textContent='Hmue';
+    word.style.position='absolute'; word.style.left=heart.style.left; word.style.top=heart.style.top;
+    word.style.fontSize=Math.max(size,12)+'px'; word.style.color='#ff91a4';
+    word.style.fontWeight='bold'; word.style.pointerEvents='none'; word.style.zIndex=10;
     document.body.appendChild(word);
-
-    // Animate word fading and floating
-    word.animate([
-      { transform: 'translateY(0)', opacity: 1 },
-      { transform: 'translateY(-100px)', opacity: 0 }
-    ], { duration: 1500, easing: 'ease-out', fill: 'forwards' });
-
-    // Remove both heart and word
-    heart.remove();
-    setTimeout(() => word.remove(), 1500);
+    word.animate([{transform:'translateY(0)',opacity:1},{transform:'translateY(-100px)',opacity:0}],
+                 {duration:1500,easing:'ease-out',fill:'forwards'});
+    if(heart.parentNode) heart.remove();
+    setTimeout(()=>word.remove(),1500);
   });
 }
+setInterval(()=>{ for(let i=0;i<8;i++) createHeart(); },300);
 
+// Grass and flowers
+const grassBlades=[];
+for(let i=0;i<120;i++){
+  const blade=document.createElement('div'); blade.className='grass-blade';
+  const height=30+Math.random()*80; blade.style.height=height+'px'; blade.dataset.height=height;
+  blade.style.left=Math.random()*window.innerWidth+'px'; document.body.appendChild(blade); grassBlades.push(blade);
+}
+function getRandomColor(){ const colors=['#ff7eb9','#ffb3d1','#ffe4f0','#e0aaff','#fddde6','#ff9ed1']; return colors[Math.floor(Math.random()*colors.length)]; }
+function createFlower(){ 
+  if(grassBlades.length===0) return;
+  const blade=grassBlades[Math.floor(Math.random()*grassBlades.length)];
+  const stemHeight=blade.dataset.height;
+  const flower=document.createElement('div'); flower.className='flower';
+  const petal1=getRandomColor(), petal2=getRandomColor(), petal3=getRandomColor();
+  flower.innerHTML=`<svg viewBox="0 0 100 ${parseInt(stemHeight)}" width="40" height="${parseInt(stemHeight)}">
+      <rect x="48" y="0" width="4" height="${stemHeight}" fill="#5a9d63"/>
+      <circle cx="50" cy="0" r="12" fill="${petal1}" />
+      <circle cx="63" cy="0" r="12" fill="${petal2}" />
+      <circle cx="56" cy="-14" r="12" fill="${petal3}" />
+    </svg>`;
+  blade.appendChild(flower);
+}
+for(let i=0;i<200;i++) setTimeout(createFlower,i*80);
+setInterval(()=>{for(let i=0;i<6;i++) createFlower();},400);
 
-  setInterval(() => { 
-    for(let i = 0; i < 8; i++) createHeart(); 
-  }, 300);
-
-  /* --- Grass Blades --- */
-  const grassBlades = [];
-  for(let i = 0; i < 120; i++) {
-    const blade = document.createElement('div');
-    blade.className = 'grass-blade';
-    const height = 30 + Math.random() * 80;
-    blade.style.height = height + 'px';
-    blade.dataset.height = height;
-    blade.style.left = Math.random() * window.innerWidth + 'px';
-    document.body.appendChild(blade);
-    grassBlades.push(blade);
-  }
-
-  /* --- Flowers --- */
-  function getRandomColor() {
-    const colors = ['#ff7eb9','#ffb3d1','#ffe4f0','#e0aaff','#fddde6','#ff9ed1'];
-    return colors[Math.floor(Math.random() * colors.length)];
-  }
-
-  function createFlower() {
-    if(grassBlades.length === 0) return;
-    const blade = grassBlades[Math.floor(Math.random() * grassBlades.length)];
-    const stemHeight = blade.dataset.height;
-
-    const flower = document.createElement('div');
-    flower.className = 'flower';
-    const petal1 = getRandomColor();
-    const petal2 = getRandomColor();
-    const petal3 = getRandomColor();
-
-    flower.innerHTML = `
-      <svg viewBox="0 0 100 ${parseInt(stemHeight)}" width="40" height="${parseInt(stemHeight)}">
-        <rect x="48" y="0" width="4" height="${stemHeight}" fill="#5a9d63"/>
-        <circle cx="50" cy="0" r="12" fill="${petal1}" />
-        <circle cx="63" cy="0" r="12" fill="${petal2}" />
-        <circle cx="56" cy="-14" r="12" fill="${petal3}" />
-      </svg>
-    `;
-    blade.appendChild(flower);
-  }
-
-  for(let i = 0; i < 200; i++) setTimeout(createFlower, i * 80);
-  setInterval(() => { for(let i = 0; i < 6; i++) createFlower(); }, 400);
-
+// Animate sparkles
+function animateSparkles(){
+  if(!sparkles.length) return;
+  sparkles.forEach(sp=>{
+    sp.x += sp.dx;
+    sp.y += sp.dy;
+    if(sp.x<0) sp.x=window.innerWidth;
+    if(sp.x>window.innerWidth) sp.x=0;
+    if(sp.y<0) sp.y=window.innerHeight;
+    if(sp.y>window.innerHeight) sp.y=0;
+    sp.el.style.left=sp.x+'px';
+    sp.el.style.top=sp.y+'px';
+  });
+  requestAnimationFrame(animateSparkles);
+}
 </script>
 </body>
 </html>

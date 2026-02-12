@@ -3,175 +3,232 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Magical Valentine Garden</title>
+<title>Heart Entrance</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
 <style>
-body {
-  margin:0; padding:0; font-family:'Poppins',sans-serif;
-  overflow:hidden; height:100vh;
-  background: linear-gradient(160deg,#f7e8f0,#e3d6f0,#fbeff8);
-  transition: background 1s ease;
-}
-body.night { background: linear-gradient(160deg,#1b1b3a,#2a2a5c,#3e3e7c); }
+body{
+  margin:0;
+  overflow:hidden;
+  font-family:'Poppins',sans-serif;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
 
-.heart-bg {
-  position:absolute; top:50%; left:50%;
-  transform:translate(-50%,-50%);
-  width:450px; height:450px; opacity:0.4;
-  z-index:1; cursor:pointer;
-  animation:appear 2s forwards, pulse 2s infinite alternate;
+  /* NEW ELEGANT BACKGROUND */
+  background: radial-gradient(circle at 30% 30%, #3a0a2a, #1a0018 70%);
 }
-.heart-bg svg{ width:100%; height:100%; }
-@keyframes appear{0%{transform:translate(-50%,-50%) scale(0);}100%{transform:translate(-50%,-50%) scale(1);}}
-@keyframes pulse{0%{transform:translate(-50%,-50%) scale(0.95);}100%{transform:translate(-50%,-50%) scale(1.05);}}
 
-.center-text{
-  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
-  text-align:center; z-index:10; width:90%;
-  text-shadow:0 0 12px rgba(255,200,220,0.7);
+/* Message */
+.message{
+  position:absolute;
+  top:40px;
+  text-align:center;
+  color:#ffd6e8;
+  font-size:18px;
+  letter-spacing:1px;
+  text-shadow:0 0 10px rgba(255,150,200,0.5);
 }
-.center-text h1{font-size:2.5em;color:#4a1a55;margin:0; transition: color 1s ease;}
-.center-text p{font-size:1.2em;color:#4a1a55;margin-top:10px; transition: color 1s ease;}
-body.night .center-text h1, body.night .center-text p{color:#ffd1e0;}
-@media (max-width:600px){.center-text h1{font-size:1.8em;}.center-text p{font-size:1em;}}
 
-/* Floating hearts */
-.heart{position:absolute;border-radius:2px;transform:rotate(-45deg);z-index:5;pointer-events:auto;}
-.heart::before,.heart::after{content:'';position:absolute;width:100%;height:100%;background:inherit;border-radius:50%;}
-.heart::before{top:-50%;left:0;}.heart::after{left:50%;top:0;}
-
-/* Grass & flowers */
-.grass-blade{
-  position:absolute; bottom:0; width:2px; background:#5a9d63;
-  border-radius:1px; animation:sway 3s ease-in-out infinite alternate;
-  display:flex; flex-direction:column; align-items:center; z-index:2;
+/* Heart container */
+.heart-container{
+  position:relative;
+  width:420px;
+  height:420px;
 }
-@keyframes sway{0%{transform:rotate(-8deg);}100%{transform:rotate(8deg);}}
-.flower{width:40px; height:auto; animation:grow 2s forwards; transform-origin:bottom center; z-index:3;}
-@keyframes grow{0%{transform:scaleY(0);}100%{transform:scaleY(1);}}
 
-/* Sparkles (night mode full screen) */
-.sparkle{
-  position:absolute; width:2px; height:2px; border-radius:50%;
-  background:#fff8f0; opacity:0.9; filter: drop-shadow(0 0 4px #ffd1e0); z-index:15;
+/* Elegant glowing heart */
+.heart-svg{
+  width:100%;
+  height:100%;
+  animation: heartbeat 2.5s infinite ease-in-out;
+  filter: drop-shadow(0 0 30px rgba(255,80,140,0.6));
 }
-body.night .sparkle{ background:#ffe6ff; filter: drop-shadow(0 0 5px #ffb6f2);}
+
+@keyframes heartbeat{
+  0%,100%{transform:scale(1);}
+  50%{transform:scale(1.06);}
+}
+
+/* Chambers */
+.chamber{
+  position:absolute;
+  width:90px;
+  height:90px;
+  border-radius:50%;
+  border:2px dashed rgba(255,255,255,0.25);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:32px;
+  font-weight:bold;
+  color:#fff;
+  transition:0.4s;
+}
+
+#room1{ top:120px; left:90px; }
+#room2{ top:120px; right:90px; }
+#room3{ bottom:110px; left:110px; }
+#room4{ bottom:110px; right:110px; }
+
+.chamber.filled{
+  border:none;
+  background:rgba(255,255,255,0.1);
+  box-shadow:0 0 20px rgba(255,120,180,0.5);
+}
+
+/* Butterflies */
+.butterfly{
+  position:absolute;
+  width:50px;
+  height:50px;
+  cursor:grab;
+  z-index:20;
+}
+
+.wing{
+  width:25px;
+  height:40px;
+  background:linear-gradient(45deg,#ff8fab,#ff4d6d);
+  border-radius:50%;
+  position:absolute;
+  animation: flap 0.6s infinite alternate;
+}
+
+.left{ left:0; transform:rotate(-20deg); }
+.right{ right:0; transform:rotate(20deg); }
+
+.body{
+  width:6px;
+  height:40px;
+  background:white;
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+}
+
+@keyframes flap{
+  from{transform:scaleY(1);}
+  to{transform:scaleY(0.8);}
+}
 </style>
 </head>
-<body class="day">
 
-<div class="heart-bg">
-  <svg viewBox="0 0 512 512">
-    <path fill="rgba(255,150,200,0.4)" d="M256 464l-16-16C113 317 48 254 48 176 48 115 100 64 160 64c38 0 73 20 96 51 23-31 58-51 96-51 60 0 112 51 112 112 0 78-65 141-192 272l-16 16z"/>
-  </svg>
+<body>
+
+<div class="message">
+  What's in my heart?🤫 💖
 </div>
 
-<div class="center-text">
-  <h1>Happy Valentine’s Day! 💖</h1>
-  <p>Here's a garden full of love and flowers, just for you 💐💗</p>
+<div class="heart-container">
+
+<!-- Elegant Gradient Heart -->
+<svg class="heart-svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="heartGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff6f91"/>
+      <stop offset="50%" stop-color="#c2185b"/>
+      <stop offset="100%" stop-color="#6a0d45"/>
+    </linearGradient>
+  </defs>
+
+  <path fill="url(#heartGradient)"
+  d="M256 464s-120-96-160-176c-40-80 0-160 80-160
+     40 0 64 24 80 56 16-32 40-56 80-56
+     80 0 120 80 80 160-40 80-160 176-160 176z"/>
+</svg>
+
+<!-- Chambers -->
+<div class="chamber" id="room1"></div>
+<div class="chamber" id="room2"></div>
+<div class="chamber" id="room3"></div>
+<div class="chamber" id="room4"></div>
+
 </div>
 
 <script>
-// --------------------- Day/Night Toggle ---------------------
-let sparkles = [];
-const heartBg = document.querySelector('.heart-bg');
+const letters = ["H","M","U","E"];
+let placedCount = 0;
 
-heartBg.addEventListener('click', (e) => {
-  const rect = heartBg.getBoundingClientRect();
-  const x = e.clientX;
-  const y = e.clientY;
-  if(x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom){
-    document.body.classList.toggle('night');
-    document.body.classList.toggle('day');
+/* Create Butterflies */
+for(let i=0;i<4;i++){
+  const b = document.createElement("div");
+  b.className="butterfly";
+  b.style.left = Math.random()* (window.innerWidth-100) + "px";
+  b.style.top = Math.random()* (window.innerHeight-200) + "px";
+  b.dataset.index = i;
+  b.draggable = true;
 
-    if(document.body.classList.contains('night')){
-      createSparkles();
-      animateSparkles();
-    } else {
-      sparkles.forEach(s => {if(s.el.parentNode)s.el.parentNode.removeChild(s.el);});
-      sparkles = [];
-    }
+  b.innerHTML = `
+    <div class="wing left"></div>
+    <div class="wing right"></div>
+    <div class="body"></div>
+  `;
+
+  document.body.appendChild(b);
+  randomFly(b);
+}
+
+/* Slow Romantic Movement */
+function randomFly(el){
+  let x = parseFloat(el.style.left);
+  let y = parseFloat(el.style.top);
+
+  let dx = (Math.random()*2 - 1) * 0.25;
+  let dy = (Math.random()*2 - 1) * 0.25;
+
+  function move(){
+    if(!document.body.contains(el)) return;
+
+    x += dx;
+    y += dy;
+
+    if(x < 0 || x > window.innerWidth-60) dx *= -1;
+    if(y < 0 || y > window.innerHeight-60) dy *= -1;
+
+    el.style.left = x + "px";
+    el.style.top = y + "px";
+
+    requestAnimationFrame(move);
+  }
+  move();
+}
+
+/* Drag System */
+const rooms = document.querySelectorAll(".chamber");
+
+document.addEventListener("dragstart", function(e){
+  if(e.target.classList.contains("butterfly")){
+    e.dataTransfer.setData("text", e.target.dataset.index);
   }
 });
 
-// --------------------- Floating Hearts ---------------------
-const heartColors=['#ff91a4','#f4c2c2','#ffc1e3','#f9a1d4','#ffd1dc'];
-function createHeart(){
-  const heart = document.createElement('div'); heart.className='heart';
-  const startX=Math.random()*window.innerWidth;
-  const startY=Math.random()*window.innerHeight;
-  heart.style.left=startX+'px'; heart.style.top=startY+'px';
-  const size=15+Math.random()*15; heart.style.width=size+'px'; heart.style.height=size+'px';
-  heart.style.background=heartColors[Math.floor(Math.random()*heartColors.length)];
-  document.body.appendChild(heart);
+rooms.forEach((room,roomIndex)=>{
+  room.addEventListener("dragover",e=>e.preventDefault());
 
-  const endY=startY-(100+Math.random()*150);
-  heart.animate([
-    {top:startY+'px', opacity:0.8, transform:'rotate(0deg) scale(0.5)'},
-    {top:endY+'px', opacity:0, transform:`rotate(${Math.random()*30-15}deg) scale(1.2)`}
-  ], {duration:3500+Math.random()*2500, easing:'ease-out', fill:'forwards'})
-  .onfinish = ()=>{ if(heart.parentNode) heart.remove(); }
+  room.addEventListener("drop",e=>{
+    e.preventDefault();
+    if(room.classList.contains("filled")) return;
 
-  heart.addEventListener('click',()=>{
-    const word=document.createElement('div'); word.textContent='Hmue';
-    word.style.position='absolute'; word.style.left=heart.style.left; word.style.top=heart.style.top;
-    word.style.fontSize=Math.max(size,12)+'px'; word.style.color='#ff91a4';
-    word.style.fontWeight='bold'; word.style.pointerEvents='none'; word.style.zIndex=10;
-    document.body.appendChild(word);
-    word.animate([{transform:'translateY(0)',opacity:1},{transform:'translateY(-100px)',opacity:0}],
-                 {duration:1200,easing:'ease-out',fill:'forwards'});
-    if(heart.parentNode) heart.remove();
-    setTimeout(()=>word.remove(),1200);
+    const index = e.dataTransfer.getData("text");
+    const butterfly = document.querySelector(`.butterfly[data-index='${index}']`);
+    if(!butterfly) return;
+
+    room.classList.add("filled");
+    room.innerText = letters[roomIndex];
+
+    butterfly.remove();
+    placedCount++;
+
+    if(placedCount === 4){
+      setTimeout(()=>{
+        window.location.href = "garden.html";
+      },1500);
+    }
   });
-}
-setInterval(()=>{for(let i=0;i<6;i++)createHeart();},400);
-
-// --------------------- Grass & Flowers ---------------------
-const grassBlades=[];
-for(let i=0;i<100;i++){
-  const blade=document.createElement('div'); blade.className='grass-blade';
-  const height=30+Math.random()*70; blade.style.height=height+'px'; blade.dataset.height=height;
-  blade.style.left=Math.random()*window.innerWidth+'px'; document.body.appendChild(blade); grassBlades.push(blade);
-}
-function getRandomColor(){ const colors=['#ff7eb9','#ffb3d1','#ffe4f0','#e0aaff','#fddde6','#ff9ed1']; return colors[Math.floor(Math.random()*colors.length)]; }
-function createFlower(){
-  if(grassBlades.length===0) return;
-  const blade=grassBlades[Math.floor(Math.random()*grassBlades.length)];
-  const stemHeight=blade.dataset.height;
-  const flower=document.createElement('div'); flower.className='flower';
-  const petal1=getRandomColor(),petal2=getRandomColor(),petal3=getRandomColor();
-  flower.innerHTML=`<svg viewBox="0 0 100 ${parseInt(stemHeight)}" width="40" height="${parseInt(stemHeight)}">
-      <rect x="48" y="0" width="4" height="${stemHeight}" fill="#5a9d63"/>
-      <circle cx="50" cy="0" r="12" fill="${petal1}" />
-      <circle cx="63" cy="0" r="12" fill="${petal2}" />
-      <circle cx="56" cy="-14" r="12" fill="${petal3}" />
-    </svg>`;
-  blade.appendChild(flower);
-}
-for(let i=0;i<180;i++) setTimeout(createFlower,i*60);
-setInterval(()=>{for(let i=0;i<5;i++)createFlower();},500);
-
-// --------------------- Sparkles Full Screen ---------------------
-function createSparkles(){
-  sparkles=[];
-  for(let i=0;i<100;i++){
-    const s=document.createElement('div'); s.className='sparkle';
-    s.style.left=Math.random()*window.innerWidth+'px';
-    s.style.top=Math.random()*window.innerHeight+'px';
-    document.body.appendChild(s);
-    sparkles.push({el:s,x:parseFloat(s.style.left),y:parseFloat(s.style.top),dx:(Math.random()*0.2-0.1),dy:(Math.random()*0.2-0.1)});
-  }
-}
-function animateSparkles(){
-  if(!sparkles.length) return;
-  sparkles.forEach(sp=>{
-    sp.x+=sp.dx; sp.y+=sp.dy;
-    if(sp.x<0) sp.x=window.innerWidth; if(sp.x>window.innerWidth) sp.x=0;
-    if(sp.y<0) sp.y=window.innerHeight; if(sp.y>window.innerHeight) sp.y=0;
-    sp.el.style.left=sp.x+'px'; sp.el.style.top=sp.y+'px';
-  });
-  requestAnimationFrame(animateSparkles);
-}
+});
 </script>
+
 </body>
 </html>

@@ -135,6 +135,24 @@ body{
   100%{transform:scale(1); opacity:1;}
 }
 
+.firework {
+  position:absolute;
+  width:8px;
+  height:8px; /* a bit bigger */
+  border-radius:50%;
+  background: radial-gradient(circle,#fff,#ff7eb9);
+  pointer-events:none;
+  animation: fireworkAnim 1.2s ease-out forwards;
+  z-index:100;
+}
+
+@keyframes fireworkAnim{
+  0%{transform:scale(1); opacity:1;}
+  100%{transform:scale(0.3) translate(var(--x), var(--y)); opacity:0;}
+}
+
+
+
 </style>
 </head>
 
@@ -263,7 +281,7 @@ function placeButterfly(butterfly, room, roomIndex){
 
   const rect = room.getBoundingClientRect();
 
-  /* Faster smooth fly */
+  /* Smooth fly into center */
   butterfly.style.transition = "all 0.45s ease-out";
   butterfly.style.left = rect.left + rect.width/2 - 25 + "px";
   butterfly.style.top = rect.top + rect.height/2 - 25 + "px";
@@ -272,14 +290,11 @@ function placeButterfly(butterfly, room, roomIndex){
   setTimeout(()=>{
 
     /* Sparkle immediately */
-    createSparkles(
-      rect.left + rect.width/2,
-      rect.top + rect.height/2
-    );
+    createSparkles(rect.left + rect.width/2, rect.top + rect.height/2);
 
     butterfly.remove();
 
-    /* Letter appears almost instantly */
+    /* Letter appears */
     room.classList.add("filled");
     room.innerText = letters[roomIndex];
     room.style.animation = "bling 0.35s ease";
@@ -287,16 +302,18 @@ function placeButterfly(butterfly, room, roomIndex){
     placedCount++;
     selectedButterfly = null;
 
+    /* Last butterfly triggers fireworks + redirect */
     if(placedCount === 4){
+      launchFireworks();
       setTimeout(()=>{
         window.location.href = "garden.html";
-      },800); // Faster redirect
+      }, 3500);
     }
 
-  },450);
+  }, 450);
 }
 
-
+/* ---------------- SPARKLES ---------------- */
 function createSparkles(x,y){
   for(let i=0;i<25;i++){
     const s = document.createElement("div");
@@ -305,8 +322,8 @@ function createSparkles(x,y){
     const angle = Math.random()*360;
     const distance = 40 + Math.random()*40;
 
-    const moveX = Math.cos(angle) * distance + "px";
-    const moveY = Math.sin(angle) * distance + "px";
+    const moveX = Math.cos(angle*Math.PI/180) * distance + "px";
+    const moveY = Math.sin(angle*Math.PI/180) * distance + "px";
 
     s.style.left = x + "px";
     s.style.top = y + "px";
@@ -315,9 +332,47 @@ function createSparkles(x,y){
 
     document.body.appendChild(s);
 
-    setTimeout(()=> s.remove(), 800);
+    setTimeout(()=> s.remove(), 500);
   }
 }
+
+/* ---------------- FIREWORKS ---------------- */
+function launchFireworks(){
+  const colors = ["#ff8fab", "#ff4d6d", "#ffd1e0", "#ff91a4", "#ffc1e3"];
+  
+  for(let burst=0; burst<8; burst++){ // 8 bursts
+    setTimeout(()=>{
+      // Pick random center in top 80% of screen
+      const centerX = Math.random() * window.innerWidth;
+      const centerY = Math.random() * window.innerHeight * 0.8;
+
+      for(let i=0;i<80;i++){ // 80 particles per burst
+        const f = document.createElement("div");
+        f.className = "firework";
+
+        const angle = Math.random()*360;
+        const distance = 150 + Math.random()*100; // Bigger spread
+
+        const moveX = Math.cos(angle*Math.PI/180) * distance + "px";
+        const moveY = Math.sin(angle*Math.PI/180) * distance + "px";
+
+        f.style.left = centerX + "px";
+        f.style.top = centerY + "px";
+
+        // Random color for each particle
+        f.style.background = colors[Math.floor(Math.random()*colors.length)];
+
+        f.style.setProperty("--x", moveX);
+        f.style.setProperty("--y", moveY);
+
+        document.body.appendChild(f);
+
+        setTimeout(()=> f.remove(),1200);
+      }
+    }, burst * 400); // delay between bursts
+  }
+}
+
 
 </script>
 

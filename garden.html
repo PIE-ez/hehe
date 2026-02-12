@@ -77,10 +77,16 @@ let sparkles = [];
 const heartBg = document.querySelector('.heart-bg');
 
 heartBg.addEventListener('click', (e) => {
-  const rect = heartBg.getBoundingClientRect();
-  const x = e.clientX;
-  const y = e.clientY;
-  if(x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom){
+  const svg = heartBg.querySelector('svg');
+  const path = svg.querySelector('path');
+  const pt = svg.createSVGPoint();
+  pt.x = e.clientX;
+  pt.y = e.clientY;
+  // Convert screen coordinates to SVG coordinates
+  const svgP = pt.matrixTransform(svg.getScreenCTM().inverse());
+
+  // Only toggle night/day if click is inside the heart path
+  if (path.isPointInFill(svgP)) {
     document.body.classList.toggle('night');
     document.body.classList.toggle('day');
 
@@ -93,6 +99,7 @@ heartBg.addEventListener('click', (e) => {
     }
   }
 });
+
 
 // --------------------- Floating Hearts ---------------------
 const heartColors=['#ff91a4','#f4c2c2','#ffc1e3','#f9a1d4','#ffd1dc'];

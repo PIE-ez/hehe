@@ -47,12 +47,15 @@ body{
 }
 
 /* Heart container */
-.heart-container{
-  position:relative;
-  width:420px;
-  height:420px;
-  z-index:10; 
+.heart-container {
+  position: relative;
+  width: 500px;   /* bigger than before */
+  height: 500px;  /* bigger than before */
+  max-width: 90vw; /* so it doesn’t overflow mobile */
+  max-height: 90vw;
+  z-index: 10; 
 }
+
 
 /* Elegant glowing heart */
 .heart-svg{
@@ -258,7 +261,7 @@ body{
   </svg>
 
   <!-- Dotted heart chambers -->
-  <div class="chamber-heart" id="room1" style="top:120px; left:90px;">
+  <div class="chamber-heart" id="room1" style="top:28%; left:20%;">
     <svg viewBox="0 0 512 512" width="90" height="90">
       <path d="M256 464s-120-96-160-176c-40-80 0-160 80-160
                40 0 64 24 80 56 16-32 40-56 80-56
@@ -266,7 +269,7 @@ body{
             fill="transparent" stroke="rgba(255,255,255,0.25)" stroke-width="4" stroke-dasharray="5,5"/>
     </svg>
   </div>
-  <div class="chamber-heart" id="room2" style="top:120px; right:90px;">
+ <div class="chamber-heart" id="room2" style="top:28%; right:20%;">
     <svg viewBox="0 0 512 512" width="90" height="90">
       <path d="M256 464s-120-96-160-176c-40-80 0-160 80-160
                40 0 64 24 80 56 16-32 40-56 80-56
@@ -274,7 +277,7 @@ body{
             fill="transparent" stroke="rgba(255,255,255,0.25)" stroke-width="4" stroke-dasharray="5,5"/>
     </svg>
   </div>
-  <div class="chamber-heart" id="room3" style="bottom:110px; left:110px;">
+  <div class="chamber-heart" id="room3" style="bottom:25%; left:25%;">
     <svg viewBox="0 0 512 512" width="90" height="90">
       <path d="M256 464s-120-96-160-176c-40-80 0-160 80-160
                40 0 64 24 80 56 16-32 40-56 80-56
@@ -282,7 +285,7 @@ body{
             fill="transparent" stroke="rgba(255,255,255,0.25)" stroke-width="4" stroke-dasharray="5,5"/>
     </svg>
   </div>
-  <div class="chamber-heart" id="room4" style="bottom:110px; right:110px;">
+  <div class="chamber-heart" id="room4" style="bottom:25%; right:25%;">
     <svg viewBox="0 0 512 512" width="90" height="90">
       <path d="M256 464s-120-96-160-176c-40-80 0-160 80-160
                40 0 64 24 80 56 16-32 40-56 80-56

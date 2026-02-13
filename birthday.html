@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Birthday Countdown</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+body {
+  margin:0;
+  font-family:'Poppins',sans-serif;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  background: linear-gradient(160deg,#ffedf0,#ffd1dc,#ffe6f2);
+  color:#4a1a55;
+  text-align:center;
+  overflow:hidden;
+}
+h1{
+  font-size:2.5em;
+  margin-bottom:0.2em;
+  text-shadow: 0 0 10px #ffb6c1;
+}
+p{
+  font-size:1.2em;
+  margin-bottom:2em;
+}
+#countdown {
+  font-size:2em;
+  font-weight:700;
+  margin-bottom:2em;
+  color:#ff4d88;
+  text-shadow: 0 0 8px #ff91a4;
+}
+.button-container{
+  display:flex;
+  gap:20px;
+}
+button{
+  padding:15px 25px;
+  font-size:1em;
+  font-weight:bold;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+  transition:0.3s;
+  color:white;
+  background: linear-gradient(45deg,#ff91a4,#ff4d88);
+}
+button:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 15px rgba(255,77,136,0.7);
+}
+</style>
+</head>
+<body>
+
+<h1>Happy Birthday! 🎉💖</h1>
+<p>Countdown to your special day:</p>
+<div id="countdown">Loading...</div>
+
+<div class="button-container">
+  <button onclick="window.location.href='index.html'">Login Page</button>
+  <button onclick="window.location.href='garden.html'">Garden Page</button>
+</div>
+
+<script>
+// ------------------- Countdown Function -------------------
+const countdownEl = document.getElementById('countdown');
+// Target birthday: April 15, 2026 00:00:00
+const birthday = new Date('2026-04-15T00:00:00');
+
+function updateCountdown(){
+  const now = new Date();
+  const diff = birthday - now;
+
+  if(diff <= 0){
+    countdownEl.textContent = "🎂 Happy Birthday! 🎉💖";
+    clearInterval(countdownInterval);
+    return;
+  }
+
+  const days = Math.floor(diff / (1000*60*60*24));
+  const hours = Math.floor((diff / (1000*60*60)) % 24);
+  const minutes = Math.floor((diff / (1000*60)) % 60);
+  const seconds = Math.floor((diff / 1000) % 60);
+
+  countdownEl.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+}
+
+updateCountdown();
+const countdownInterval = setInterval(updateCountdown, 1000);
+</script>
+
+</body>
+</html>

@@ -25,6 +25,7 @@ body.night { background: linear-gradient(160deg,#1b1b3a,#2a2a5c,#3e3e7c); }
 @keyframes appear{0%{transform:translate(-50%,-50%) scale(0);}100%{transform:translate(-50%,-50%) scale(1);}}
 @keyframes pulse{0%{transform:translate(-50%,-50%) scale(0.95);}100%{transform:translate(-50%,-50%) scale(1.05);}}
 
+
 .center-text{
   position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
   text-align:center; z-index:10; width:90%;
@@ -47,6 +48,8 @@ body.night .center-text h1, body.night .center-text p{color:#ffd1e0;}
   display:flex; flex-direction:column; align-items:center; z-index:2;
 }
 @keyframes sway{0%{transform:rotate(-8deg);}100%{transform:rotate(8deg);}}
+
+/* Flower animation */
 .flower{width:40px; height:auto; animation:grow 2s forwards; transform-origin:bottom center; z-index:3;}
 @keyframes grow{0%{transform:scaleY(0);}100%{transform:scaleY(1);}}
 
@@ -56,6 +59,17 @@ body.night .center-text h1, body.night .center-text p{color:#ffd1e0;}
   background:#fff8f0; opacity:0.9; filter: drop-shadow(0 0 4px #ffd1e0); z-index:15;
 }
 body.night .sparkle{ background:#ffe6ff; filter: drop-shadow(0 0 5px #ffb6f2);}
+
+/* Floating Key */
+#floating-key {
+  position:absolute;
+  width:60px;
+  height:60px;
+  z-index:20;
+  cursor:pointer;
+  pointer-events:auto;
+  transition: transform 1s ease-in-out;
+}
 </style>
 </head>
 <body class="day">
@@ -71,6 +85,11 @@ body.night .sparkle{ background:#ffe6ff; filter: drop-shadow(0 0 5px #ffb6f2);}
   <p>Here's a garden full of love and flowers, just for you 💐💗</p>
 </div>
 
+<!-- Floating Key -->
+<div id="floating-key" title="Go to Birthday Page">
+  <img src="https://static.vecteezy.com/system/resources/thumbnails/019/907/697/small/key-graphic-clipart-design-free-png.png" alt="Golden Key" width="100%" height="100%">
+</div>
+
 <script>
 // --------------------- Day/Night Toggle ---------------------
 let sparkles = [];
@@ -82,10 +101,8 @@ heartBg.addEventListener('click', (e) => {
   const pt = svg.createSVGPoint();
   pt.x = e.clientX;
   pt.y = e.clientY;
-  // Convert screen coordinates to SVG coordinates
   const svgP = pt.matrixTransform(svg.getScreenCTM().inverse());
 
-  // Only toggle night/day if click is inside the heart path
   if (path.isPointInFill(svgP)) {
     document.body.classList.toggle('night');
     document.body.classList.toggle('day');
@@ -99,7 +116,6 @@ heartBg.addEventListener('click', (e) => {
     }
   }
 });
-
 
 // --------------------- Floating Hearts ---------------------
 const heartColors=['#ff91a4','#f4c2c2','#ffc1e3','#f9a1d4','#ffd1dc'];
@@ -179,6 +195,26 @@ function animateSparkles(){
   });
   requestAnimationFrame(animateSparkles);
 }
+
+// --------------------- Floating Key ---------------------
+const key = document.getElementById('floating-key');
+key.style.left = (window.innerWidth - 100) + 'px';
+key.style.top = (window.innerHeight - 100) + 'px';
+key.addEventListener('click', ()=>{ window.location.href = 'birthday.html'; });
+
+function floatKeySlow(){
+  const x = Math.random()*(window.innerWidth-60);
+  const y = Math.random()*(window.innerHeight-60);
+  key.animate([
+    {left: key.style.left, top: key.style.top, transform:'translate(0,0)'},
+    {left: x+'px', top: y+'px', transform:'translate(0,0)'}
+  ], {duration:10000, easing:'ease-in-out', fill:'forwards'})
+  .onfinish = ()=>{
+    key.style.left = x+'px'; key.style.top = y+'px';
+    setTimeout(floatKeySlow,1000);
+  };
+}
+floatKeySlow();
 </script>
 </body>
 </html>

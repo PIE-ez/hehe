@@ -195,6 +195,42 @@ body{
   0%{transform:scale(1); opacity:1;}
   100%{transform:scale(0.3) translate(var(--x), var(--y)); opacity:0;}
 }
+
+/* Responsive for small screens */
+@media (max-width: 600px) {
+  .heart-text {
+    font-size: 28px;        /* smaller text */
+    top:5%;                 /* move higher above heart */
+    line-height: 1.2;
+  }
+
+  .heart-container {
+    width: 280px;            /* shrink heart */
+    height: 280px;
+  }
+
+  .chamber-heart {
+    width: 60px;
+    height: 60px;
+    font-size: 20px;
+  }
+
+  .butterfly {
+    width: 35px;
+    height: 35px;
+  }
+
+  .wing {
+    width: 15px;
+    height: 25px;
+  }
+
+  .body {
+    height: 25px;
+    width: 4px;
+  }
+}
+
 </style>
 </head>
 
